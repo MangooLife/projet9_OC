@@ -11,4 +11,6 @@
     <bean id="TransactionManager" class="com.dummy.myerp.business.impl.TransactionManager">
     </bean>
 
+    <!-- 2 imports  context business et consumer + ajout dataSourceMYERP-->
+
 </beans>
