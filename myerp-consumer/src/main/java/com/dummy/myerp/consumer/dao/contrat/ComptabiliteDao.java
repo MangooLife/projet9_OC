@@ -95,4 +95,11 @@ public interface ComptabiliteDao {
      * @param pSequenceEcritureComptable -
      */
     void updateSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable);
+
+    /**
+     * Supprime la sequence écriture comptable d'id {@code pId}.
+     *
+     * @param pSequenceEcritureComptable -
+     */
+    void deleteSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable);
 }

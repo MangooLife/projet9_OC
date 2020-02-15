@@ -35,7 +35,6 @@ public class SequenceEcritureComptable {
         derniereValeur = pDerniereValeur;
     }
 
-
     // ==================== Getters/Setters ====================
     public Integer getAnnee() {
         return annee;
@@ -63,6 +62,7 @@ public class SequenceEcritureComptable {
         final String vSEP = ", ";
         vStB.append("{")
             .append("annee=").append(annee)
+            .append("journalCode=").append(journalCode)
             .append(vSEP).append("derniereValeur=").append(derniereValeur)
             .append("}");
         return vStB.toString();

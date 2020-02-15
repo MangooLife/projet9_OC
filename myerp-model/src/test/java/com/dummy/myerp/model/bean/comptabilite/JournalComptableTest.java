@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.validation.constraints.AssertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,5 +72,16 @@ public class JournalComptableTest {
     @Test
     public void getNullByCodeIfListNull() {
         Assert.assertEquals(null, JournalComptable.getByCode(null,"BQ"));
+    }
+
+    @Test
+    public void getListSequenceEcritureComptable() {
+        List<SequenceEcritureComptable> l = new ArrayList<>();
+        SequenceEcritureComptable s = new SequenceEcritureComptable("AC", 2016, 40);
+        l.add(s);
+        JournalComptable j = new JournalComptable("AC", "Achat",l);
+        j.getSequenceEcritureComptables();
+
+        Assert.assertEquals(l, j.getSequenceEcritureComptables());
     }
 }
