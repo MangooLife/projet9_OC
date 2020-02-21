@@ -53,12 +53,6 @@ public class ComptabiliteManagerImplTest {
         sequenceEcritureComptable2 = new SequenceEcritureComptable();
     }
 
-    @After
-    public void tearDown() throws Exception {
-        sequenceEcritureComptable2 = null;
-        vEcritureComptable = null;
-    }
-
     /*-- UNIT TEST : checkEcritureComptableUnit --*/
     @Test
     public void checkEcritureComptableUnit() throws Exception {
