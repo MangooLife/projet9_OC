@@ -1,10 +1,14 @@
 sudo: required
 
+language: java
+jdk:
+  - openjdk11
+
 services:
   - docker
 
 env:
-  DOCKER_COMPOSE_VERSION: 1.25.2
+  - DOCKER_COMPOSE_VERSION: 1.25.2
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
