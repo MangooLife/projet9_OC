@@ -79,7 +79,6 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         EcritureComptable vEcritureComptable2 = new EcritureComptable();
         vEcritureComptable2.setJournal(new JournalComptable("BQ", "Banque"));
         vEcritureComptable2.setDate(dateNow);
-        vEcritureComptable2.setReference("null");
         managerTestCase.addReference(vEcritureComptable2);
 
         Assert.assertEquals(vEcritureComptable2.getReference(), "BQ-2020/00001");
