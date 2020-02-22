@@ -17,7 +17,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - mvn clean intall
+  - mvn clean install
   - bash <(curl -s https://codecov.io/bash)
 
 after_script:
