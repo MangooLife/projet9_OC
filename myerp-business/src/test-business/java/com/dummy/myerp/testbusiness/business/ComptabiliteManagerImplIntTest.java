@@ -5,6 +5,7 @@ import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
+public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
 
     private static ComptabiliteManager managerTestCase;
     private static EcritureComptable vEcritureComptable;
@@ -55,6 +56,7 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
 
     /*-- UNIT TEST : addReference --*/
     @Test
+    @Transactional
     public void checkAddReferenceIfAlreadyInDB() throws Exception {
         sequenceEcritureComptable = new SequenceEcritureComptable("AC", 2016, 40);
         listSeqExpected.add(sequenceEcritureComptable);
@@ -67,10 +69,12 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
         managerTestCase.addReference(vEcritureComptable);
 
         Assert.assertEquals(vEcritureComptable.getReference(), "AC-2016/00041");
+        managerTestCase.deleteSequenceEcritureComptable(sequenceEcritureComptable2);
     }
 
     /*-- UNIT TEST : addReference --*/
     @Test
+    @Transactional
     public void checkAddReferenceIsNotInDB() throws Exception {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(dateNow);
@@ -83,6 +87,7 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
 
     /*-- UNIT TEST : checkEcritureComptable --*/
     @Test
+    @Transactional
     public void checkEcritureComptable() throws Exception {
         vEcritureComptable.setReference("AC-2020/00001");
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
@@ -95,6 +100,7 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
     }
 
     @Test
+    @Transactional
     public void checkEcritureComptableIfEcritureCExist() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2016, 01, 01, 10, 59, 59);
@@ -109,6 +115,7 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
 
     /*-- UNIT TEST : insertEcritureComptable, update and delete--*/
     @Test
+    @Transactional
     public void insertEcritureComptable() throws FunctionalException {
         EcritureComptable vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -129,6 +136,7 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
     }
 
     @Test
+    @Transactional
     public void updateEcritureComptable() throws FunctionalException {
         EcritureComptable vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -153,16 +161,18 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
     }
 
     @Test
+    @Transactional
     public void deleteEcritureComptable() throws FunctionalException {
         managerTestCase.deleteEcritureComptable(vEcritureComptable.getId());
     }
 
     /*-- UNIT TEST : insertSequenceEcritureComptable --*/
     @Test
+    @Transactional
     public void insertSequenceEcritureComptable() throws FunctionalException {
         sequenceEcritureComptable2.setJournalCode("AC");
         sequenceEcritureComptable2.setDerniereValeur(1);
-        sequenceEcritureComptable2.setAnnee(2020);
+        sequenceEcritureComptable2.setAnnee(2022);
 
         managerTestCase.insertSequenceEcritureComptable(sequenceEcritureComptable2);
         int lastNumber = sequenceEcritureComptable2.getDerniereValeur();
@@ -170,12 +180,13 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
 
         Assert.assertEquals(sequenceEcritureComptable2.getJournalCode(), "AC");
         Assert.assertEquals(lastNumber, 1);
-        Assert.assertEquals(annee, 2020);
+        Assert.assertEquals(annee, 2022);
         managerTestCase.deleteSequenceEcritureComptable(sequenceEcritureComptable2);
     }
 
     /*-- UNIT TEST : updateSequenceEcritureComptable --*/
     @Test
+    @Transactional
     public void updateSequenceEcritureComptableTest() throws FunctionalException {
         sequenceEcritureComptable2.setJournalCode("AC");
         sequenceEcritureComptable2.setDerniereValeur(1);
@@ -195,10 +206,11 @@ public class ComptabiliteManagerImplTestInt extends BusinessTestCase {
 
     /*-- UNIT TEST : deleteSequenceEcritureComptable --*/
     @Test
+    @Transactional
     public void deleteSequenceEcritureComptable() throws FunctionalException {
         sequenceEcritureComptable2.setJournalCode("AC");
         sequenceEcritureComptable2.setDerniereValeur(2);
-        sequenceEcritureComptable2.setAnnee(2020);
+        sequenceEcritureComptable2.setAnnee(2021);
         managerTestCase.insertSequenceEcritureComptable(sequenceEcritureComptable2);
 
         managerTestCase.deleteSequenceEcritureComptable(sequenceEcritureComptable2);

@@ -18,7 +18,8 @@ before_install:
 
 script:
   - mvn clean test
-  - mvn clean install
+  - mvn verify -Ptest-business
+  - mvn verify -Ptest-consumer
   - bash <(curl -s https://codecov.io/bash)
 
 after_script:
