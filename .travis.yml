@@ -21,7 +21,7 @@ before_install:
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
 
 before_script:
-  - cd /docker/dev/init
+  - sudo cd /docker/dev/init
   - docker-compose up -d --build
 
 script:
