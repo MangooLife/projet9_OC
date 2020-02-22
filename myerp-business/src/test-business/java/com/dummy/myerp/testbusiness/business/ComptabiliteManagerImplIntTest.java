@@ -63,8 +63,8 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat",listSeqExpected));
         Calendar calendar = Calendar.getInstance();
         calendar.set(2016, 01, 01, 10, 59, 59);
-        Date happyNewYearDate = calendar.getTime();
-        vEcritureComptable.setDate(happyNewYearDate);
+        Date newDate = calendar.getTime();
+        vEcritureComptable.setDate(newDate);
         vEcritureComptable.setReference("AC-2016/00040");
         managerTestCase.addReference(vEcritureComptable);
 
@@ -77,11 +77,11 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
     @Transactional
     public void checkAddReferenceIsNotInDB() throws Exception {
         EcritureComptable vEcritureComptable2 = new EcritureComptable();
-        vEcritureComptable2.setJournal(new JournalComptable("BQ", "Banque"));
+        vEcritureComptable2.setJournal(new JournalComptable("OD", "Opérations Diverses"));
         vEcritureComptable2.setDate(dateNow);
         managerTestCase.addReference(vEcritureComptable2);
 
-        Assert.assertEquals(vEcritureComptable2.getReference(), "BQ-2020/00001");
+        Assert.assertEquals(vEcritureComptable2.getReference(), "OD-2020/00001");
     }
 
     /*-- UNIT TEST : checkEcritureComptable --*/
