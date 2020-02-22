@@ -17,7 +17,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - mvn clean install
+  - mvn clean org.codehaus.mojo:build-helper-maven-plugin:add-test-source
   - bash <(curl -s https://codecov.io/bash)
 
 after_script:
