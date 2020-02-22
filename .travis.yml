@@ -20,7 +20,6 @@ before_script:
   - docker-compose -f docker/dev/docker-compose.yml up -d
 
 script:
-  - mvn clean intall
   - mvn install -Ptest-business -Ptest-consumer
   - bash <(curl -s https://codecov.io/bash)
 
