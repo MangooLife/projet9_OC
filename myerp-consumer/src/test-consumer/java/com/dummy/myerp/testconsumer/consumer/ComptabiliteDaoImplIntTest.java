@@ -58,7 +58,6 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
         //WHEN
         List<CompteComptable> listCompteComptableExpected = managerTestCase.getListCompteComptable();
         CompteComptable compteComptableToTest = listCompteComptableExpected.get(0);
-
         //THEN
         Assert.assertFalse(listCompteComptableExpected.isEmpty());
         Assert.assertEquals(compteComptableToTest.getNumero().intValue(), 401);
@@ -70,7 +69,6 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
         //WHEN
         List<JournalComptable> listjournalComptableExpected = managerTestCase.getListJournalComptable();
         JournalComptable journalComptableToTest = listjournalComptableExpected.get(0);
-
         //THEN
         Assert.assertFalse(listjournalComptableExpected.isEmpty());
         Assert.assertEquals(journalComptableToTest.getCode(), "AC");
@@ -82,7 +80,6 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
         //WHEN
         List<EcritureComptable> listEcritureComptableExpected = managerTestCase.getListEcritureComptable();
         EcritureComptable ecritureComptableToTest = listEcritureComptableExpected.get(0);
-
         //THEN
         Assert.assertFalse(listEcritureComptableExpected.isEmpty());
         Assert.assertEquals(ecritureComptableToTest.getJournal().getCode(), "AC");
@@ -98,7 +95,6 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
         List<EcritureComptable> listEcriture = managerTestCase.getListEcritureComptable();
         EcritureComptable ecriture2 = listEcriture.get(3);
         boolean ok = ecriture2.getId().equals(ecriture.getId());
-
         //THEN
         Assert.assertTrue(ok);
         Assert.assertEquals(ecriture.getJournal().getCode(), "VE");
@@ -114,7 +110,6 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
         List<EcritureComptable> listEcriture = managerTestCase.getListEcritureComptable();
         EcritureComptable ecriture2 = listEcriture.get(0);
         boolean ok = ecriture2.getId().equals(ecriture.getId());
-
         //THEN
         Assert.assertTrue(ok);
         Assert.assertEquals(ecriture.getJournal().getCode(), "AC");
@@ -125,17 +120,21 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
 
     @Test
     public void getEcritureComptableFail() throws NotFoundException {
+        //THEN
         expectedException.expect(NotFoundException.class);
         expectedException.expectMessage(
                 "EcritureComptable non trouvée : id=100");
+        //GIVEN
         managerTestCase.getEcritureComptable(100);
     }
 
     @Test
     public void getEcritureComptableByRefFail() throws NotFoundException {
+        //THEN
         expectedException.expect(NotFoundException.class);
         expectedException.expectMessage(
                 "EcritureComptable non trouvée : reference=AC-2030/00001");
+        //GIVEN
         managerTestCase.getEcritureComptableByRef("AC-2030/00001");
     }
 
@@ -146,7 +145,6 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
         managerTestCase.insertEcritureComptable(ecritureComptable);
         EcritureComptable e2 = managerTestCase.getEcritureComptable(ecritureComptable.getId());
         Boolean ok = e2.getReference().equals(ecritureComptable.getReference());
-
         //THEN
         Assert.assertTrue(ok);
         Assert.assertEquals(ecritureComptable.getJournal().getCode(), "AC");
@@ -160,13 +158,11 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
         //GIVEN
         ecritureComptable.setReference("AC-2020/00005");
         managerTestCase.insertEcritureComptable(ecritureComptable);
-
         //WHEN
         ecritureComptable.setLibelle("update");
         managerTestCase.updateEcritureComptable(ecritureComptable);
         EcritureComptable e2 = managerTestCase.getEcritureComptable(ecritureComptable.getId());
         Boolean ok = e2.getLibelle().equals(ecritureComptable.getLibelle());
-
         //THEN
         Assert.assertTrue(ok);
         Assert.assertEquals(ecritureComptable.getLibelle(), "update");
@@ -178,11 +174,9 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
         //GIVEN
         ecritureComptable.setReference("AC-2020/00005");
         managerTestCase.insertEcritureComptable(ecritureComptable);
-
         //WHEN
         managerTestCase.deleteEcritureComptable(ecritureComptable.getId());
         List<EcritureComptable> listEcritureComptableExpected = managerTestCase.getListEcritureComptable();
-
         //THEN
         Assert.assertFalse(listEcritureComptableExpected.contains(ecritureComptable));
     }
@@ -191,7 +185,6 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
     public void insertSequenceEcritureComptable() {
         //WHEN
         managerMock.insertSequenceEcritureComptable(sequenceEcritureComptable);
-
         //THEN
         Mockito.verify(managerMock, times(1)).insertSequenceEcritureComptable(sequenceEcritureComptable);
         managerMock.deleteSequenceEcritureComptable(sequenceEcritureComptable);
@@ -202,10 +195,8 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
     public void updateSequenceEcritureComptable() {
         //GIVEN
         sequenceEcritureComptable.setDerniereValeur(20);
-
         //WHEN
         managerMock.updateSequenceEcritureComptable(sequenceEcritureComptable);
-
         //THEN
         Assert.assertEquals(sequenceEcritureComptable.getDerniereValeur().intValue(), 20);
         Mockito.verify(managerMock, times(1)).updateSequenceEcritureComptable(sequenceEcritureComptable);
@@ -217,10 +208,8 @@ public class ComptabiliteDaoImplIntTest extends ConsumerTestCase {
     public void deleteSequenceEcritureComptable() throws NotFoundException {
         //GIVEN
         managerMock.insertSequenceEcritureComptable(sequenceEcritureComptable);
-
         //WHEN
         managerMock.deleteSequenceEcritureComptable(sequenceEcritureComptable);
-
         //THEN
         Mockito.verify(managerMock, times(1)).insertSequenceEcritureComptable(sequenceEcritureComptable);
         Mockito.verify(managerMock, times(1)).deleteSequenceEcritureComptable(sequenceEcritureComptable);
