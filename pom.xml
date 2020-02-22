@@ -257,14 +257,6 @@
     <!-- Dependencies -->
     <!-- =============================================================== -->
     <dependencies>
-        <!-- Required so we can dynamically inject the Jacoco jar into our container -->
-        <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>org.jacoco.agent</artifactId>
-            <classifier>runtime</classifier>
-            <version>0.8.4</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
 
@@ -272,6 +264,28 @@
     <!-- Build -->
     <!-- =============================================================== -->
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <!-- attached to Maven test phase -->
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <!-- =============================================================== -->
         <!-- pluginManagement -->
         <!-- =============================================================== -->

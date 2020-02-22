@@ -17,9 +17,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - mvn clean install
-  - mvn package -Ptest-business
-  - mvn package -Ptest-consumer
+  - mvn clean -P test-business, test-consumer
   - bash <(curl -s https://codecov.io/bash)
 
 after_script:
