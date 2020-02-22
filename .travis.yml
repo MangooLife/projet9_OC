@@ -21,7 +21,7 @@ before_script:
 
 script:
   - mvn clean test
-  - mvn verify -Ptest-business, Ptest-consumer
+  - mvn verify -Ptest-business, test-consumer
   - bash <(curl -s https://codecov.io/bash)
 
 after_script:
