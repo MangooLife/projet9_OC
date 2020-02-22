@@ -18,6 +18,7 @@ before_install:
 
 script:
   - mvn clean test
+  - mvn clean install
   - bash <(curl -s https://codecov.io/bash)
 
 after_script:
