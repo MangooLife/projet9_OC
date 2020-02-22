@@ -28,7 +28,7 @@ public class ComptabiliteManagerImplTest {
     private static Calendar calendar;
 
     @Mock
-    ComptabiliteManagerImpl managerMock = mock(ComptabiliteManagerImpl.class);
+    public ComptabiliteManagerImpl managerMock = mock(ComptabiliteManagerImpl.class);
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
