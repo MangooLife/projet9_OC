@@ -16,10 +16,8 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-before_script:
-  - sudo docker-compose up -d --build
-
 script:
+  - docker-compose up -d --build
   - mvn clean test
   - mvn verify -Ptest-business
   - mvn verify -Ptest-consumer
