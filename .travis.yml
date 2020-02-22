@@ -17,6 +17,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
+  - cd /docker/dev/init
   - docker-compose up -d --build
   - mvn clean test
   - mvn verify -Ptest-business
