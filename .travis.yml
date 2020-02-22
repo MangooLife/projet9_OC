@@ -6,6 +6,7 @@ jdk:
 
 services:
   - docker
+  - postgresql
 
 env:
   - DOCKER_COMPOSE_VERSION= 1.25.2
@@ -20,6 +21,7 @@ install:
   - docker-compose up -d
 
 before_script:
+  - cp config/database.yml.travis config/database.yml
   - curl http://localhost:9032/
 
 script:
