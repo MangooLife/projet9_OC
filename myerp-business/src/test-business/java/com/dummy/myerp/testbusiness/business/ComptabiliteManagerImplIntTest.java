@@ -76,13 +76,13 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
     @Test
     @Transactional
     public void checkAddReferenceIsNotInDB() throws Exception {
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setDate(dateNow);
-        vEcritureComptable.setReference("null");
-        managerTestCase.addReference(vEcritureComptable);
+        EcritureComptable vEcritureComptable2 = new EcritureComptable();
+        vEcritureComptable2.setJournal(new JournalComptable("BQ", "Banque"));
+        vEcritureComptable2.setDate(dateNow);
+        vEcritureComptable2.setReference("null");
+        managerTestCase.addReference(vEcritureComptable2);
 
-        Assert.assertEquals(vEcritureComptable.getReference(), "AC-2020/00001");
-        managerTestCase.deleteSequenceEcritureComptable(sequenceEcritureComptable2);
+        Assert.assertEquals(vEcritureComptable2.getReference(), "BQ-2020/00001");
     }
 
     /*-- UNIT TEST : checkEcritureComptable --*/
@@ -188,7 +188,7 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
     @Test
     @Transactional
     public void updateSequenceEcritureComptableTest() throws FunctionalException {
-        sequenceEcritureComptable2.setJournalCode("AC");
+        sequenceEcritureComptable2.setJournalCode("VE");
         sequenceEcritureComptable2.setDerniereValeur(1);
         sequenceEcritureComptable2.setAnnee(2020);
         managerTestCase.insertSequenceEcritureComptable(sequenceEcritureComptable2);
@@ -198,7 +198,7 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         int lastNumber = sequenceEcritureComptable2.getDerniereValeur();
         int annee = sequenceEcritureComptable2.getAnnee();
 
-        Assert.assertEquals(sequenceEcritureComptable2.getJournalCode(), "AC");
+        Assert.assertEquals(sequenceEcritureComptable2.getJournalCode(), "VE");
         Assert.assertEquals(lastNumber, 2);
         Assert.assertEquals(annee, 2020);
         managerTestCase.deleteSequenceEcritureComptable(sequenceEcritureComptable2);
