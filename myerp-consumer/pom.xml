@@ -118,6 +118,9 @@
                 </plugins>
                 <testResources>
                     <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                    <testResource>
                         <directory>src/test-consumer/resources</directory>
                     </testResource>
                 </testResources>
