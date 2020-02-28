@@ -1,5 +1,3 @@
-sudo: required
-
 language: java
 jdk:
   - oraclejdk11
@@ -10,13 +8,8 @@ services:
 env:
   - DOCKER_COMPOSE_VERSION= 1.25.2
 
-#before_install:
-#  - sudo rm /usr/local/bin/docker-compose
-#  - sudo curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-#  - sudo chmod +x docker-compose
-#  - sudo mv docker-compose /usr/local/bin
-
 before_script:
+  # Starts the containers in the background and leaves them running.
   - docker-compose -f docker/dev/docker-compose.yml up -d
 
 script:
@@ -24,6 +17,9 @@ script:
   - bash <(curl -s https://codecov.io/bash)
 
 after_script:
+  # Stops running containers without removing them
   - docker-compose -f docker/dev/docker-compose.yml stop
+  # Removes stopped service containers
   - docker-compose -f docker/dev/docker-compose.yml rm -f
+  # Stops containers and removes containers, networks, volumes, and images created by up
   - docker-compose -f docker/dev/docker-compose.yml down
