@@ -79,7 +79,13 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         //WHEN
         managerTestCase.addReference(vEcritureComptable);
         //THEN
-        Assert.assertEquals(vEcritureComptable.getReference(), "AC-2016/00041");
+        List<SequenceEcritureComptable> sECList = managerTestCase.getListSequenceEcritureComptable();
+        SequenceEcritureComptable sECToTest = sECList.get(sECList.size()-1);
+        int lastNumber = sECToTest.getDerniereValeur();
+        int annee = sECToTest.getAnnee();
+        Assert.assertEquals(sECToTest.getJournalCode(), "AC");
+        Assert.assertEquals(annee, 2016);
+        Assert.assertEquals(lastNumber, 41);
     }
 
     @Test
@@ -92,7 +98,13 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         //WHEN
         managerTestCase.addReference(vEcritureComptable2);
         //THEN
-        Assert.assertEquals(vEcritureComptable2.getReference(), "OD-2020/00001");
+        List<SequenceEcritureComptable> sECList = managerTestCase.getListSequenceEcritureComptable();
+        SequenceEcritureComptable sECToTest = sECList.get(sECList.size()-1);
+        int lastNumber = sECToTest.getDerniereValeur();
+        int annee = sECToTest.getAnnee();
+        Assert.assertEquals(sECToTest.getJournalCode(), "OD");
+        Assert.assertEquals(annee, 2020);
+        Assert.assertEquals(lastNumber, 1);
     }
 
     /*-- UNIT TEST : checkEcritureComptable --*/
@@ -146,9 +158,11 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         //WHEN
         managerTestCase.insertEcritureComptable(vEcritureComptable);
         //THEN
-        Assert.assertEquals(vEcritureComptable.getLibelle(), "Libelle");
-        Assert.assertEquals(vEcritureComptable.getReference(), "AC-2020/00001");
-        managerTestCase.deleteEcritureComptable(vEcritureComptable.getId());
+        List<EcritureComptable> listEcritureComptableExpected = managerTestCase.getListEcritureComptable();
+        EcritureComptable ecritureComptableToTest = listEcritureComptableExpected.get(listEcritureComptableExpected.size()-1);
+        Assert.assertEquals(ecritureComptableToTest.getLibelle(), "Libelle");
+        Assert.assertEquals(ecritureComptableToTest.getReference(), "AC-2020/00001");
+        managerTestCase.deleteEcritureComptable(ecritureComptableToTest.getId());
     }
 
     @Test
@@ -172,15 +186,36 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         vEcritureComptable.setReference("AC-2020/00002");
         managerTestCase.updateEcritureComptable(vEcritureComptable);
         //THEN
-        Assert.assertEquals(vEcritureComptable.getLibelle(), "Libelle2");
-        Assert.assertEquals(vEcritureComptable.getReference(), "AC-2020/00002");
+        List<EcritureComptable> listEcritureComptableExpected = managerTestCase.getListEcritureComptable();
+        EcritureComptable ecritureComptableToTest = listEcritureComptableExpected.get(listEcritureComptableExpected.size()-1);
+        Assert.assertEquals(ecritureComptableToTest.getLibelle(), "Libelle2");
+        Assert.assertEquals(ecritureComptableToTest.getReference(), "AC-2020/00002");
         managerTestCase.deleteEcritureComptable(vEcritureComptable.getId());
     }
 
     @Test
     @Transactional
     public void deleteEcritureComptable() throws FunctionalException {
+        //GIVEN
+        EcritureComptable vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.setReference("AC-2020/00001");
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
+                null, new BigDecimal(123),
+                null));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
+                null, null,
+                new BigDecimal(123)));
+        managerTestCase.insertEcritureComptable(vEcritureComptable);
+        //WHEN
         managerTestCase.deleteEcritureComptable(vEcritureComptable.getId());
+        //THEN
+        List<EcritureComptable> listEcritureComptableExpected = managerTestCase.getListEcritureComptable();
+        EcritureComptable ecritureComptableToTest = listEcritureComptableExpected.get(listEcritureComptableExpected.size()-1);
+        Assert.assertNotEquals(ecritureComptableToTest.getLibelle(), "Libelle");
+        Assert.assertNotEquals(ecritureComptableToTest.getReference(), "AC-2020/00001");
     }
 
     /*-- UNIT TEST : insertSequenceEcritureComptable update and delete--*/
@@ -193,13 +228,15 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         sequenceEcritureComptable2.setAnnee(2022);
         //WHEN
         managerTestCase.insertSequenceEcritureComptable(sequenceEcritureComptable2);
-        int lastNumber = sequenceEcritureComptable2.getDerniereValeur();
-        int annee = sequenceEcritureComptable2.getAnnee();
         //THEN
-        Assert.assertEquals(sequenceEcritureComptable2.getJournalCode(), "AC");
+        List<SequenceEcritureComptable> listSECExpected = managerTestCase.getListSequenceEcritureComptable();
+        SequenceEcritureComptable sECExpected = listSECExpected.get(listSECExpected.size()-1);
+        int lastNumber = sECExpected.getDerniereValeur();
+        int annee = sECExpected.getAnnee();
+        Assert.assertEquals(sECExpected.getJournalCode(), "AC");
         Assert.assertEquals(lastNumber, 1);
         Assert.assertEquals(annee, 2022);
-        managerTestCase.deleteSequenceEcritureComptable(sequenceEcritureComptable2);
+        managerTestCase.deleteSequenceEcritureComptable(sECExpected);
     }
 
     /*-- UNIT TEST : updateSequenceEcritureComptable --*/
@@ -214,13 +251,15 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         //WHEN
         sequenceEcritureComptable2.setDerniereValeur(2);
         managerTestCase.updateSequenceEcritureComptable(sequenceEcritureComptable2);
-        int lastNumber = sequenceEcritureComptable2.getDerniereValeur();
-        int annee = sequenceEcritureComptable2.getAnnee();
         //THEN
-        Assert.assertEquals(sequenceEcritureComptable2.getJournalCode(), "VE");
+        List<SequenceEcritureComptable> listSECExpected = managerTestCase.getListSequenceEcritureComptable();
+        SequenceEcritureComptable sECExpected = listSECExpected.get(listSECExpected.size()-1);
+        int lastNumber = sECExpected.getDerniereValeur();
+        int annee = sECExpected.getAnnee();
+        Assert.assertEquals(sECExpected.getJournalCode(), "VE");
         Assert.assertEquals(lastNumber, 2);
         Assert.assertEquals(annee, 2020);
-        managerTestCase.deleteSequenceEcritureComptable(sequenceEcritureComptable2);
+        managerTestCase.deleteSequenceEcritureComptable(sECExpected);
     }
 
     /*-- UNIT TEST : deleteSequenceEcritureComptable --*/
@@ -235,6 +274,13 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         //WHEN
         managerMock.deleteSequenceEcritureComptable(sequenceEcritureComptable2);
         //THEN
+        List<SequenceEcritureComptable> listSECExpected = managerTestCase.getListSequenceEcritureComptable();
+        SequenceEcritureComptable sECExpected = listSECExpected.get(listSECExpected.size()-1);
+        int lastNumber = sECExpected.getDerniereValeur();
+        int annee = sECExpected.getAnnee();
+        Assert.assertNotEquals(sECExpected.getJournalCode(), "AC");
+        Assert.assertNotEquals(annee, 2021);
+        Assert.assertNotEquals(lastNumber, 2);
         Mockito.verify(managerMock, times(1)).deleteSequenceEcritureComptable(sequenceEcritureComptable2);
     }
 

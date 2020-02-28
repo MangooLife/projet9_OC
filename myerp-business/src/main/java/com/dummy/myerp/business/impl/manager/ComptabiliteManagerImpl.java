@@ -59,6 +59,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
+    @Override
+    public List<SequenceEcritureComptable> getListSequenceEcritureComptable() {
+        return getDaoProxy().getComptabiliteDao().getListSequenceEcritureComptable();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     // TODO à tester
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) throws FunctionalException {

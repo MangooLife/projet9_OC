@@ -3,16 +3,13 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 import java.sql.Types;
 import java.util.List;
 
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.*;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.CompteComptableRM;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.JournalComptableRM;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.LigneEcritureComptableRM;
 import com.dummy.myerp.consumer.db.AbstractDbConsumer;
 import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.technical.exception.NotFoundException;
@@ -316,5 +313,16 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vJdbcTemplate.update(SQLdeleteSequenceEcritureComptable, vSqlParams);
     }
 
-
+    /** SQLgetListSequenceEcritureComptable */
+    private static String SQLgetListSequenceEcritureComptable;
+    public void setSQLgetListSequenceEcritureComptable(String pSQLgetListSequenceEcritureComptable) {
+        SQLgetListSequenceEcritureComptable = pSQLgetListSequenceEcritureComptable;
+    }
+    @Override
+    public List<SequenceEcritureComptable> getListSequenceEcritureComptable() {
+        JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
+        SequenceEcritureComptableRM vRM = new SequenceEcritureComptableRM();
+        List<SequenceEcritureComptable> vList = vJdbcTemplate.query(SQLgetListSequenceEcritureComptable, vRM);
+        return vList;
+    }
 }

@@ -102,4 +102,10 @@ public interface ComptabiliteDao {
      * @param pSequenceEcritureComptable -
      */
     void deleteSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable);
+
+    /**
+     * Renvoie la liste des Sequences Ecriture Comptable
+     * @return {@link List}
+     */
+    List<SequenceEcritureComptable> getListSequenceEcritureComptable();
 }
